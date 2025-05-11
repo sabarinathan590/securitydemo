@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.List;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -25,7 +27,10 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsService initialiseUsers(){
-        return new InMemoryUserDetailsManager(User.builder().username("user1").password("{noop}user1").roles("USER").build());
+        return new InMemoryUserDetailsManager(
+                List.of(User.builder().username("user").password("{noop}user").roles("USER").build(),
+                        User.builder().username("admin").password("{noop}admin").roles("ADMIN").build())
+        );
     }
 }
 
